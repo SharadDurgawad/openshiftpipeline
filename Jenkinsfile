@@ -11,21 +11,21 @@ pipeline {
       }
       steps {
 		echo "Before MVN !!!"
-        sh 'mvn -f saving-account/pom.xml clean install'
+        sh 'mvn -f hello/pom.xml clean install'
       }
     }
     stage("SonarQube analysis") {
     agent any
     steps {
      withSonarQubeEnv('SonarQube') {
-         sh '/usr/local/maven/bin/mvn -f  saving-account/pom.xml sonar:sonar'
+         sh '/usr/local/maven/bin/mvn -f  hello/pom.xml sonar:sonar'
         }
       }
     }
 	stage('Docker Build') {
       agent any
       steps {
-        sh 'docker build -t sdurgawad/saving-account:latest .'
+        sh 'docker build -t sdurgawad/hello:latest .'
       }
     }
 	stage ('Docker Push') {
@@ -33,7 +33,7 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
 	  sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-	  sh 'docker push sdurgawad/saving-account:latest'
+	  sh 'docker push sdurgawad/hello:latest'
         }
       }
 	}
