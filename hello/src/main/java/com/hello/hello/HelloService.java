@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 public class HelloService {
 	@Scheduled(fixedRate = 2000)
 	public void scheduleTaskWithFixedRate() {
-	   System.out.println("Fixed Rate Task");
+	   System.out.println("Hello there, This is Sharad Durgawad, a DevOps Cloud Automation enthusiast !!!");
 	}
 }
